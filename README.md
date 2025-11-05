@@ -47,7 +47,7 @@ The Monte Carlo simulation experiments were conducted to examine:
 | Shrinkage step | \(d\) | 0.1 |
 | Liu-type | \(k\) | optimally selected |
 | Baseline parameter | \(\delta_0\) | 0 |
-| Number of iterations | |`iter = 1000` |
+| Number of iterations | iter | 1000 |
 | Random seed | | 1973 |
 
 
