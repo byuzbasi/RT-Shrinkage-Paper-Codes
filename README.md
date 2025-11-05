@@ -32,7 +32,7 @@ This repository provides full replication materials for the study:
 ### Purpose
 The Monte Carlo simulation experiments were conducted to examine:
 - The effect of multicollinearity (correlation among predictors) on estimator performance.
-- The bias and efficiency of the proposed ridge-type shrinkage estimators compared with classical estimators (OLS, Ridge, Liu, etc.).
+- The bias and efficiency of the proposed ridge-type shrinkage estimators compared with penalized and machine learning methods
 
 ### Main Settings
 
@@ -51,24 +51,9 @@ The Monte Carlo simulation experiments were conducted to examine:
 | Random seed | | 1973 |
 
 
-- Sample sizes: *n = 25, 50, 100*
-- Number of regressors: *p = 4, 6, 8*
-- Correlation levels: *ρ = 0.80, 0.90, 0.99*
-- Replications: *10,000*
+
 - Performance metrics: **Bias**, **MSE**, **RMSE**, and **Predictive Error (PE)**
 
-### Running the Simulation
-```R
-setwd("simulation/")
-source("sim_main.R")
-```
-
-## Real Data Applications
-
-### Running the applications
-```R
-setwd("R/")
-source("ridge_estimators.R")
 
 
 
