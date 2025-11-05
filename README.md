@@ -35,6 +35,22 @@ The Monte Carlo simulation experiments were conducted to examine:
 - The bias and efficiency of the proposed ridge-type shrinkage estimators compared with classical estimators (OLS, Ridge, Liu, etc.).
 
 ### Main Settings
+
+| Parameter | Symbol | Value / Description |
+|------------|----------|----------------------|
+| Sample size | \(n\) | 100 |
+| Number of predictors | \(p\) | 15 |
+| Number of restrictions | \(q\) | 10 |
+| Ridge correlation parameter | \(\rho\) | 0.95 |
+| Noise variance | \(\tau^2\) | 1 |
+| Confidence level | \(\alpha\) | 0.05 |
+| Shrinkage step | \(d\) | 0.1 |
+| Liu-type | \(k\) | optimally selected |
+| Baseline parameter | \(\delta_0\) | 0 |
+| Number of iterations | iter | 1000 |
+| Random seed | | 1973 |
+
+
 - Sample sizes: *n = 25, 50, 100*
 - Number of regressors: *p = 4, 6, 8*
 - Correlation levels: *ρ = 0.80, 0.90, 0.99*
