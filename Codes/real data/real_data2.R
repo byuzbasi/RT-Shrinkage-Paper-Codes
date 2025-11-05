@@ -1,4 +1,4 @@
-setwd("~/Desktop/ALL_MY_STUDIES/Makaleler/marwan al-momani/real_Data_finalized")
+setwd("~/RT-Shrinkage-Paper-Codes/data sets")
 rm(list=ls()) # remove all files
 library(lars) # for 'cv.folds' function to split data
 library(ncvreg)
@@ -76,9 +76,11 @@ n <- dim(Xr)[1]
 p <- dim(Xr)[2]
 #
 full_ind <- colnames(Xr)
-#
-
-
+# Variable Selection
+require(olsrr)
+model <- lm(yr ~ ., data = Data.matrix)
+bss <- ols_step_best_subset(model)
+#### Sub Model Variables based onn CP and AIC Criteria
 sub1_x <- unlist(strsplit(bss$metrics$predictors[which.min(bss$metrics$cp)], " "))
 sub2_x <- unlist(strsplit(bss$metrics$predictors[which.min(bss$metrics$aic)], " "))
 #
