@@ -96,21 +96,15 @@ p2_2 <- p-p1_2
 xcount.ur <- c(0,full_ind) 
 fmla.ur <- as.formula(paste("y.train ~ ", paste(xcount.ur, collapse= "+")))
 
-# K-fold cross-validation
-### PREDICTION ERROR (You may use different function if you want)
+
+### PREDICTION ERROR 
 # This is constucted with standardized train data 
 PE.funct_beta <- function(opt.beta, newx, p1_indx,newy,mean.y,mean.X,sd.X)
 {
   fit = newy - mean.y -  scale(newx[,p1_indx], mean.X[p1_indx],F) %*% opt.beta
   return(t(fit)%*%fit / length(newy))
 }
-
-#PE.funct_beta <- function(opt.beta, newx, p1_indx,newy,mean.y,mean.X)
-#{
-#  fit = newy - newx[,p1_indx] %*% opt.beta
-#  return(t(fit)%*%fit / length(newy))
-#}
-
+##
 prederror<-function(y,yhat){
   mean((yhat - y)^2)
 }
@@ -159,11 +153,7 @@ smp_size <- floor(0.7 * n)
 for(J in 1:repeatnum){ # loop 1 begins
   set.seed(J)
   #generare data with resampling
-  #data.boots <- as.matrix(Data.matrix[sample(1:nrow(Data.matrix), nrow(Data.matrix), replace = TRUE),] )
-  #sample <- sample(c(TRUE, FALSE), nrow(prostate), replace=TRUE, prob=c(0.8,0.2))
   train_ind <- sample(seq_len(nrow(Data.matrix)), size = smp_size)
-  #prostate_train <- prostate[sample, ]
-  #prostate_test <- prostate[!sample, ]
   X.train <- Data.matrix[train_ind,-1]
   y.train <- Data.matrix[train_ind,1]
   nt <- dim(X.train)[1]
@@ -213,14 +203,6 @@ for(J in 1:repeatnum){ # loop 1 begins
   beta1.SM_2=beta.FM-solve(G)%*%t(R2)%*%solve(R2%*%solve(G)%*%t(R2))%*%R2%*%beta.FM
   
   
-  
-  
-  
-  #sigma(rfit)^2 == sigma2 # Check they are equal or not!
-  
-  
-  
-  
   #beta.KL     = solve(G+k*Ip)%*%(G-k*Ip)%*%beta.FM
   beta.KL      = Kl_beta_k_opt(k_grid,X.test,y.test,mean.y,mean.X,sd.X,beta.FM)$beta_opt
   #
@@ -260,12 +242,7 @@ for(J in 1:repeatnum){ # loop 1 begins
   beta.SPTKL_1   <- SPTKL_beta_d_opt(d_grid,X.test,y.test,mean.y,mean.X,sd.X,beta.KL,beta1.SM_1,tn1,lalpha1)$beta_opt
   beta.SPTKL_2   <- SPTKL_beta_d_opt(d_grid,X.test,y.test,mean.y,mean.X,sd.X,beta.KL,beta1.SM_2,tn2,lalpha2)$beta_opt
 
-  #PE.funct_beta(beta.FM,X.test,1:p,y.test,mean.y,mean.X)
-  #prederror(y.test-mean.y,scale (X.test, mean.X, FALSE) %*% beta.FM)
-  #prederror(y.test-mean.y,X.test_scale %*% beta.FM)
-  #cbind(y.test-mean.y,scale (X.test, mean.X, FALSE) %*% beta.FM, predict(ufit, newdata=as.data.frame(X.test_scale)))
-  
-  
+
   #### PENALIZED METHODS
   ##### ENET
   alphas <- seq(.1,.9,.1)
@@ -281,28 +258,16 @@ for(J in 1:repeatnum){ # loop 1 begins
   #  
   lasso.fit <- cv.glmnet(X.train, y.train, alpha = 1,standardize=T)
   b.lasso = coef(lasso.fit,s="lambda.min")[-1]
-  
-  
-  
-  
-  
+  #
   ridge.fit <- cv.glmnet(X.train, y.train, alpha = 0,standardize=T)
   b.ridge = coef(ridge.fit,s="lambda.min")[-1]
-  
-  
-  
+  #
   weight <- b.lasso
   weight <- ifelse(weight == 0, 0.00001, weight)
   #adalaso.cv.model <- cv.glmnet(X.train, y.train, alpha = 1, penalty.factor=1/abs(weight),nfolds = 10,intercept = F, standardize = F)
   #beta.alasso   <- coef(adalaso.cv.model, s = "lambda.min")[-1]
   alasso.fit <- cv.glmnet(X.train, y.train, alpha = 1, penalty.factor=1/abs(weight),standardize = T)
   b.alasso = coef(alasso.fit,s="lambda.min")[-1]
-  
-  
-  
-  #scad.cv.model <- cv.ncvreg(X.train, y.train, penalty=c("SCAD"),nfolds = 10,intercept = T, standardize = F)
-  #b.scad        <- coef(scad.cv.model, s = "lambda.min")[-1]
-  
   #SCAD
   scad.fit <- cv.ncvreg(X.train, y.train, penalty=c("SCAD"))
   b.scad   <- coef(scad.fit,s="lambda.min")[-1]
@@ -310,7 +275,6 @@ for(J in 1:repeatnum){ # loop 1 begins
   
   
   # Machine Learnings
-  
   ##########################################################
   ###### Neurol Network
   ##########################################################
@@ -463,80 +427,3 @@ T3_se   <- PE.se.mls
 
 T1[1,1]/T3
 
-Table <- round(T1,4)
-colnames(T1) <- c('PE','PE')
-rownames(T1) <- names(PE.all1)
-for(i in 1:7){
-  for(j in c(1:2)){
-    Table[i,j] <- c(paste(round(T1[i,j],3),"(",round(T1_se[i,j],3),")",sep=""))
-  }
-}
-
-Table
-
-Table2 <- round(T2,3)
-for(i in c(1:5)){
-  Table2[i] <- c(paste(round(T2[i],3),"(",round(T2_se[i],3),")",sep=""))
-}
-
-Table2
-
-Table3 <- round(T3,3)
-for(i in c(1:4)){
-  Table3[i] <- c(paste(round(T3[i],3),"(",round(T3_se[i],3),")",sep=""))
-}
-
-Table3
-
-require(kableExtra)
-kbl(Table3,format = "latex",
-    booktabs = T, align = "c")
-
-kbl(cbind(Table[,1],round(T1[1,1]/T1[,1],3),Table[,2],round(T1[1,1]/T1[,2],3)),format = "latex",
-    booktabs = T, align = "c")
-
-
-kbl(cbind(Table2,round(T1[1,1]/PE.pens,3)),format = "latex",
-    booktabs = T, align = "c")
-
-kbl(cbind(Table3,round(T1[1,1]/PE.mls,3)),format = "latex",
-    booktabs = T, align = "c")
-
-#### plots
-require(reshape)
-sub1 <- melt(MSE_sub1)
-sub2 <- melt(MSE_sub2)
-pm   <- melt(MSE_pens)
-colnames(MSE_ml)[4] <- c("OLS")
-ml   <- melt(MSE_ml)
-
-
-df1<- data.frame(Model=rep("Shrinkage Methods(via Forward)",dim(sub1)[1]),sub1)
-df2<- data.frame(Model=rep("Shrinkage Methods(via Backward)",dim(sub2)[1]),sub2)
-df3<- data.frame(Model=rep("Penalized Methods",dim(pm)[1]),pm)
-df4<- data.frame(Model=rep("Machine Learnings + OLS",dim(ml)[1]),ml)
-
-
-df_boxplot<- rbind(df1,df2,df3,df4)
-
-
-
-require(viridis)
-require(hrbrthemes)
-# Plot
-plot1 <- ggplot(df_boxplot, aes(x=factor(X2), y=value) ) + 
-  #geom_boxplot(alpha = 0.5, show.legend = FALSE, aes(fill=factor(X2))) + 
-  geom_boxplot() + 
-  #geom_jitter(width=0.25)+
-  scale_y_continuous(limits=c(0,15000)) + 
-  facet_grid(.~Model,scales = "free") +
-  theme_light()+
-  theme(strip.text.x = element_text(size=10, color="black", face="bold")) +
-  labs(x=" ", y="PE")
-plot1
-
-#setwd("/Users/bahadiryuzbasi/Desktop/marwan al-momani/KL_paper_Last_Version")
-setEPS()
-postscript("box_plot_pe_original_data_1000_rep.eps", horizontal = FALSE, onefile = FALSE, paper = "special", height = 8, width = 14)
-plot1
-dev.off()
