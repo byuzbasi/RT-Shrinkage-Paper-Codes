@@ -8,7 +8,7 @@ This repository contains the R scripts, simulation files, and empirical datasets
 
 ---
 
-## 📑 Abstract
+## Abstract
 
 Multicollinearity is a common issue in regression analysis that occurs when some predictor variables are highly correlated, leading to unstable least squares estimates 
 of model parameters. Various estimation strategies have been proposed to address this problem. In this study, we enhance a ridge-type estimator by incorporating pretest and 
@@ -26,5 +26,31 @@ This repository provides full replication materials for the study:
 
 ---
 
-## 📁 Repository Structure
+
+## Simulation Study
+
+### Purpose
+The Monte Carlo simulation experiments were conducted to examine:
+- The effect of multicollinearity (correlation among predictors) on estimator performance.
+- The bias and efficiency of the proposed ridge-type shrinkage estimators compared with classical estimators (OLS, Ridge, Liu, etc.).
+
+### Main Settings
+- Sample sizes: *n = 25, 50, 100*
+- Number of regressors: *p = 4, 6, 8*
+- Correlation levels: *ρ = 0.80, 0.90, 0.99*
+- Replications: *10,000*
+- Performance metrics: **Bias**, **MSE**, **RMSE**, and **Predictive Error (PE)**
+
+### Running the Simulation
+```R
+setwd("simulation/")
+source("sim_main.R")
+
+
+### Running Simulation Study
+```R
+setwd("R/")
+source("ridge_estimators.R")
+
+
 
