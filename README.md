@@ -45,7 +45,9 @@ The Monte Carlo simulation experiments were conducted to examine:
 ```R
 setwd("simulation/")
 source("sim_main.R")
+```
 
+## Real Data Applications
 
 ### Running Simulation Study
 ```R
