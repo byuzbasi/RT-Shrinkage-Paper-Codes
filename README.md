@@ -49,7 +49,7 @@ source("sim_main.R")
 
 ## Real Data Applications
 
-### Running Simulation Study
+### Running the applications
 ```R
 setwd("R/")
 source("ridge_estimators.R")
