@@ -44,10 +44,11 @@ The Monte Carlo simulation experiments were conducted to examine:
 | Ridge correlation parameter | \(\rho\) | 0.95 |
 | Noise variance | \(\tau^2\) | 1 |
 | Confidence level | \(\alpha\) | 0.05 |
-| Shrinkage step (Liu-type) | \(d\) | 0.1 |
+| Shrinkage step | \(d\) | 0.1 |
+| Liu-type | \(k\) | optimally selected |
 | Baseline parameter | \(\delta_0\) | 0 |
-| Number of iterations | `iter = 1000` |
-| Random seed | 1973 |
+| Number of iterations | |`iter = 1000` |
+| Random seed | | 1973 |
 
 
 - Sample sizes: *n = 25, 50, 100*
