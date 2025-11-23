@@ -2,9 +2,8 @@
 
 This repository contains the R scripts, simulation files, and empirical datasets supporting the paper:
 
-> **Marwan Al-Momani\*, Bahadır Yüzbaşı, M.S. Bataineh, Rihab Abdallah, and Athifa Moideenkutty.**  
-> *Shrinkage Approaches for Ridge-Type Estimators under Multicollinearity.*  
-> University of Sharjah & Inonu University, 2025.
+> Al-Momani, M., Yüzbaşı, B., Bataineh, M. S., Abdallah, R., & Moideenkutty, A. (2025). Shrinkage Approaches for Ridge-Type Estimators Under Multicollinearity.
+> Mathematics, 13(22), 3733. https://doi.org/10.3390/math13223733
 
 ---
 
